@@ -19,18 +19,21 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "id")})
 public class UserEntity {
 	@Id
-	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid",strategy="uuid")
-	private String id;
-	
-	@Column(nullable=false)
-	private String email;
+	@GeneratedValue(generator="system-uukey")
+	@GenericGenerator(name="system-uukey",strategy="uukey")
+	private String key;
 	
 	@Column(nullable=false)
 	private String username;
+	
+	@Column(nullable=false)
+	private String phone;
+	
+	@Column(nullable=false)
+	private String id;
 	
 	@Column(nullable=false)
 	private String password;

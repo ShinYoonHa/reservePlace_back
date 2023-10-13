@@ -1,6 +1,6 @@
 package com.example.reservePlace.dto;
 
-import com.example.reservePlace.model.TodoEntity;
+import com.example.reservePlace.model.ReserveEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,20 +11,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class TodoDTO {
-	private String id;
+public class ReserveDTO {
+	private String key;
 	private String title;
 	private boolean done;
 	
-	public TodoDTO(final TodoEntity entity) {
-		this.id = entity.getId();
+	public ReserveDTO(final ReserveEntity entity) {
+		this.key = entity.getKey();
 		this.title = entity.getTitle();
 		this.done = entity.isDone();
 	}
 	
-	public static TodoEntity toEntity(final TodoDTO dto) {
-		return TodoEntity.builder()
-				.id(dto.getId())
+	public static ReserveEntity toEntity(final ReserveDTO dto) {
+		return ReserveEntity.builder()
+				.Key(dto.getKey())
 				.title(dto.getTitle())
 				.done(dto.isDone()).build();
 	}

@@ -7,7 +7,7 @@ import com.example.reservePlace.model.UserEntity;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, String>{
-	UserEntity findByEmail(String email);
-	Boolean existsByEmail(String email);
-	UserEntity findByEmailAndPassword(String email, String password);
+	UserEntity findByUserId(String id);
+	Boolean existsByUserId(String id);
+	UserEntity findByUserIdAndPassword(String id, String password);
 }

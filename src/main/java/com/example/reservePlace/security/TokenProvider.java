@@ -25,7 +25,7 @@ public class TokenProvider {
 	return Jwts.builder()
 		.signWith(SignatureAlgorithm.HS512, SECRET_KEY)
 		.setSubject(userEntity.getId())
-		.setIssuer("todo app")
+		.setIssuer("reservePlace app")
 		.setIssuedAt(new Date())
 		.setExpiration(expireDate)
 		.compact();
