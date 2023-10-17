@@ -16,19 +16,19 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	public UserEntity create(final UserEntity userEntity) {
-		if(userEntity == null || userEntity.getEmail() == null) {
+		if(userEntity == null || userEntity.getUid() == null) {
 			throw new RuntimeException("Invalid arguments");
 		}
-		final String email = userEntity.getEmail();
-		if(userRepository.existsByEmail(email)) {
-			log.warn("Email already exists {}",email);
-			throw new RuntimeException("Email already exists");
+		final String uid = userEntity.getUid();
+		if(userRepository.existsByUid(uid)) {
+			log.warn("Id already exists {}",uid);
+			throw new RuntimeException("Id already exists");
 		}
 		return userRepository.save(userEntity);
 	}
-	public UserEntity getByCredentials(final String email, final String password,
+	public UserEntity getByCredentials(final String uid, final String password,
 			final PasswordEncoder encoder) {
-		final UserEntity originalUser = userRepository.findByEmail(email);
+		final UserEntity originalUser = userRepository.findByUid(uid);
 		if(originalUser != null && encoder.matches(password, originalUser.getPassword())) {
 			return originalUser;
 		}
