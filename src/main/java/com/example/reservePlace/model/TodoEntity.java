@@ -23,8 +23,8 @@ public class TodoEntity {
 	@Id
 	@GeneratedValue(generator="system-uuid") //자동으로  id 생성
 	@GenericGenerator(name="system-uuid",strategy="uuid")
-	private String id;
-	private String userId;
+	private String num;
+	private String userNum;
 	private String title;
 	private boolean done;
 }

@@ -42,7 +42,7 @@ public class UserController {
 			UserEntity registeredUser = userService.create(user);
 			UserDTO responseUserDTO = userDTO.builder()
 				.uid(registeredUser.getUid())
-				.id(registeredUser.getId())
+				.num(registeredUser.getNum())
 				.phone(registeredUser.getPhone())
 				.username(registeredUser.getUsername())
 				.build();
@@ -62,7 +62,7 @@ public class UserController {
 			final String token = tokenProvider.create(user);
 			final UserDTO responseUserDTO = UserDTO.builder()
 				.uid(user.getUid())
-				.id(user.getId())
+				.num(user.getNum())
 				.token(token)
 				.build();
 			return ResponseEntity.ok().body(responseUserDTO);

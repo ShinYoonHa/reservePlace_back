@@ -9,6 +9,6 @@ import com.example.reservePlace.model.TodoEntity;
 
 @Repository
 public interface TodoRepository extends JpaRepository<TodoEntity,String>{
-	@Query("select t from TodoEntity t where t.userId = ?1")
-	List<TodoEntity>findByUserId(String userId);
+	@Query("select t from TodoEntity t where t.userNum = ?1")
+	List<TodoEntity>findByUserNum(String userNum);
 }

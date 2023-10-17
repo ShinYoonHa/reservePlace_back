@@ -32,13 +32,13 @@ public class TodoController {
 	private TodoService service;
 	
 	@PostMapping
-	public ResponseEntity<?> createTodo(@AuthenticationPrincipal String userId,	@RequestBody TodoDTO dto) {
+	public ResponseEntity<?> createTodo(@AuthenticationPrincipal String userNum, @RequestBody TodoDTO dto) {
 		try {
 			// dto 를 이용해 테이블에 저장하기 위한 entity를 생성한다.
 			TodoEntity entity = TodoDTO.toEntity(dto);
 			// entity userId를 임시로 지정한다
-			entity.setId(null);
-			entity.setUserId(userId);
+			entity.setNum(null);
+			entity.setUserNum(userNum);
 			// service.create 를 통해 repository 에 entity를 저장한다.
 			// 이때 넘어노는 값이 없을 수도 있으므로 List가 아닌 Optional 로 한다.
 			List<TodoEntity> entities = service.create(entity);
@@ -58,8 +58,8 @@ public class TodoController {
 		}
 	}
 	@GetMapping
-	public ResponseEntity<?> retrieveTodo(@AuthenticationPrincipal String userId) {
-		List<TodoEntity> entities = service.retrieve(userId);
+	public ResponseEntity<?> retrieveTodo(@AuthenticationPrincipal String userNum) {
+		List<TodoEntity> entities = service.retrieve(userNum);
 		List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
 		ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().data(dtos).build();
 		//HTTP Status 200 상태로 response 를 전송한다.
@@ -67,12 +67,12 @@ public class TodoController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<?> updateTodo(@AuthenticationPrincipal String userId,@RequestBody TodoDTO dto) {
+	public ResponseEntity<?> updateTodo(@AuthenticationPrincipal String userNum,@RequestBody TodoDTO dto) {
 		try {
 			// dto 를 이용해 테이블에 저장하기 위한 entity를 생성한다.
 			TodoEntity entity = TodoDTO.toEntity(dto);
 			// entity userId를 임시로 지정한다.
-			entity.setUserId(userId);
+			entity.setUserNum(userNum);
 			// service.create 를 통해 repository 에 entity를 저장한다.
 			// 이때 넘어노는 값이 없을 수도 있으므로 List가 아닌 Optional 로 한다.
 			List<TodoEntity> entities = service.update(entity);
@@ -89,11 +89,11 @@ public class TodoController {
 		}
 	}
 	@DeleteMapping
-	public ResponseEntity<?> deleteTodo(@AuthenticationPrincipal String userId,@RequestBody TodoDTO dto) {
+	public ResponseEntity<?> deleteTodo(@AuthenticationPrincipal String userNum,@RequestBody TodoDTO dto) {
 		try {
 			TodoEntity entity = TodoDTO.toEntity(dto);
 			// entity userId를 임시로 지정한다.
-			entity.setUserId(userId);
+			entity.setUserNum(userNum);
 			List<TodoEntity> entities = service.delete(entity);
 			//entities 를 dtos 로 스트림 변환한다.
 			List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());

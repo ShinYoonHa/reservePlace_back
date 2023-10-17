@@ -22,32 +22,31 @@ public class TodoService {
 		validate(entity);
 		repository.save(entity);
 		//return repository.findById(entity.getId());
-		return repository.findByUserId(entity.getUserId());
+		return repository.findByUserNum(entity.getUserNum());
 	}
-	public List<TodoEntity> retrieve(final String userId) {
-		return repository.findByUserId(userId);
+	public List<TodoEntity> retrieve(final String userNum) {
+		return repository.findByUserNum(userNum);
 	}
 	public List<TodoEntity> update(final TodoEntity entity) {
 		//Validations
 		validate(entity);
-		if (repository.existsById(entity.getId())) {
+		if (repository.existsById(entity.getNum())) {
 			repository.save(entity);
-		} else throw new RuntimeException("Unknown id");
-		//return repository.findById(entity.getId());
-		return repository.findByUserId(entity.getUserId());
+		} else throw new RuntimeException("Unknown num");
+		return repository.findByUserNum(entity.getUserNum());
 	}
 	public List<TodoEntity> delete(final TodoEntity entity) {
-		if(repository.existsById(entity.getId()))
-		repository.deleteById(entity.getId());
-		else throw new RuntimeException("id does not exist");
-		return repository.findByUserId(entity.getUserId());
+		if(repository.existsById(entity.getNum()))
+		repository.deleteById(entity.getNum());
+		else throw new RuntimeException("num does not exist");
+		return repository.findByUserNum(entity.getUserNum());
 	}
 	public void validate(final TodoEntity entity) {
 		if(entity == null ) {
 			log.warn("Entity cannot be null.");
 			throw new RuntimeException("Entity cannot be null.");
 		}
-		if(entity.getUserId() == null) {
+		if(entity.getUserNum() == null) {
 			log.warn("Unknown user.");
 			throw new RuntimeException("Unknown user.");
 		}

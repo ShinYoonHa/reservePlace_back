@@ -24,7 +24,7 @@ public class UserEntity {
 	@Id
 	@GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid",strategy="uuid")
-	private String id;
+	private String num;
 	
 	@Column(nullable=false)
 	private String uid;
