@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -91,5 +92,27 @@ public class UserController {
 
             // 유저 정보 업데이트하기
             userService.updateUserEntity(update_user);
+    }
+    
+    //회원탈퇴
+    @DeleteMapping("/withdraw")
+    public ResponseEntity<?> withdraw(@RequestBody UserDTO userDTO) {
+        try {
+            // 1. 사용자 아이디로 userEntity 찾기
+            UserEntity user = userService.getUserEntity(userDTO.getUid());
+
+            if (user == null) {
+                return ResponseEntity.badRequest().body("User not found");
+            }
+
+            // 2. 사용자 정보 삭제
+            userService.deleteUserEntity(user);
+
+            // 3. 회원탈퇴 성공 메시지 반환
+            return ResponseEntity.ok().body("User has been withdrawn successfully");
+        } catch (Exception e) {
+            ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
     }
 }
